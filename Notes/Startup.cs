@@ -14,10 +14,26 @@ namespace Notes
 {
     public class Startup
     {
+        private const string AllowedOrigins = "_myAllowSpecificOrigins";
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<NotesContext>(options =>
                 options.UseInMemoryDatabase(databaseName: "Notes"));
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    name: AllowedOrigins,
+                    builder =>
+                    {
+                        builder.WithOrigins(
+                            "http://localhost:3000"
+                            )
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
 
             services.AddControllers();
         }
@@ -30,6 +46,8 @@ namespace Notes
             }
 
             app.UseRouting();
+
+            app.UseCors(AllowedOrigins);
 
             app.UseEndpoints(endpoints =>
             {
