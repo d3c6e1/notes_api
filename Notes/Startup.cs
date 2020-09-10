@@ -28,7 +28,8 @@ namespace Notes
                     builder =>
                     {
                         builder.WithOrigins(
-                            "http://localhost:3000"
+                                // add yor origins (urls of client apps)
+                                "http://localhost:3000"
                             )
                             .AllowAnyHeader()
                             .AllowAnyMethod();

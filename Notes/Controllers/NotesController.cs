@@ -34,6 +34,15 @@ namespace Notes.Controllers
                 return NotFound();
             return new ObjectResult(note);
         }
+        
+        [HttpGet("s/{searchString}")]
+        public async Task<ActionResult<IEnumerable<Note>>> Get(string searchString)
+        {
+            var notes = _context.Notes.Where(note => note.Content.ToLower().Contains(searchString.ToLower()));
+            if (!notes.Any())
+                return NotFound();
+            return await notes.ToListAsync();
+        }
  
         [HttpPost]
         public async Task<ActionResult<Note>> Post(Note note)
