@@ -20,9 +20,7 @@ namespace Notes.Models
                     return;
                 }
 
-                context.Notes.Add(new Note { Id = 1, Content = "First note", LastUpdate = DateTime.Now});
-                context.Notes.Add(new Note { Id = 2, Content = "Second note", LastUpdate = DateTime.Now});
-                context.Notes.Add(new Note { Id = 3, Content = "Third note", LastUpdate = DateTime.Now});
+                context.Notes.Add(new Note { Id = 1, Content = "Welcome", LastUpdate = DateTime.Now});
                 context.SaveChanges();
             }
         }
