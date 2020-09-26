@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Notes.Models;
@@ -33,6 +31,15 @@ namespace Notes.Controllers
             if (note == null)
                 return NotFound();
             return new ObjectResult(note);
+        }
+        
+        [HttpGet("s/{searchString}")]
+        public async Task<ActionResult<IEnumerable<Note>>> Get(string searchString)
+        {
+            var notes = _context.Notes.Where(note => note.Content.ToLower().Contains(searchString.ToLower()));
+            if (!notes.Any())
+                return NotFound();
+            return await notes.ToListAsync();
         }
  
         [HttpPost]
